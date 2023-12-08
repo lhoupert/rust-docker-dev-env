@@ -1,0 +1,27 @@
+version: "3.9"
+networks:
+  rust_network:
+    driver: bridge
+
+services:
+  rust:
+    container_name: rust
+    image: loic-crc/rust
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    volumes:
+      - '../:/src'
+    cap_drop:
+      - all
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - rust_network
+    ulimits:
+      nofile: 20000
+      nproc: 1000
+    tty: true
+    stdin_open: true
+    restart: "no"
+
